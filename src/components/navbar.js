@@ -1,10 +1,23 @@
 import React, { Component } from 'react'
 // import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 
 export default class navbar extends Component {
   // static propTypes = {
     
   // }
+  ch=''
+  state={text:""}
+  entry=(par)=>{
+    this.setState({text: par.target.value})
+    this.props.search(this.state.text);
+    if(this.state.text!==''){
+      this.ch='custom'
+    }else{
+      this.ch=''
+    }
+  }
+
 
   render() {
     return (
@@ -17,15 +30,19 @@ export default class navbar extends Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
-                <a className="nav-link active" aria-current="page" href="/">Home</a>
-                <a className="nav-link active" aria-current="page" href="/">business</a>
-                <a className="nav-link active" aria-current="page" href="/">entertainment</a>
-                <a className="nav-link active" aria-current="page" href="/">general</a>
-                <a className="nav-link active" aria-current="page" href="/">health</a>
-                <a className="nav-link active" aria-current="page" href="/">science</a>
-                <a className="nav-link active" aria-current="page" href="/">sports</a>
-                <a className="nav-link active" aria-current="page" href="/">technology</a>
+                <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+                <Link className="nav-link active" aria-current="page" to="/business">Business</Link>
+                <Link className="nav-link active" aria-current="page" to="/entertainment">Entertainment</Link>
+                <Link className="nav-link active" aria-current="page" to="/general">General</Link>
+                <Link className="nav-link active" aria-current="page" to="/health">Health</Link>
+                <Link className="nav-link active" aria-current="page" to="/science">Science</Link>
+                <Link className="nav-link active" aria-current="page" to="/sports">Sports</Link>
+                <Link className="nav-link active" aria-current="page" to="/technology">Technology</Link>
               </div>
+            </div>
+            <div className="d-flex">
+              <input className="form-control me-2" type="text" value={this.state.text} onChange={this.entry} placeholder="Search" aria-label="Search"/>
+              <Link className="btn btn-outline-success" to={`/${this.ch}`}>Search</Link>
             </div>
           </div>
         </nav>

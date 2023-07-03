@@ -6,19 +6,24 @@ import PropTypes from 'prop-types'
 
 export class NewsContainer extends Component {
   static defaultProps = {
-    country:'in',
+    country:'&country=in',
     pgsize: 5,
+    topic: "top-headlines",
+    q:'',
+    catagory:''
   }
   static propTypes = {
     country: PropTypes.string,
     pgsize: PropTypes.number,
     catagory: PropTypes.string,
     apiKey: PropTypes.string.isRequired,
+    q: PropTypes.string,
   }
   
 
   constructor() {
     super();
+    // console.log(this.props.q);
     this.state = {
       articles: [],
       loading: true,
@@ -29,7 +34,7 @@ export class NewsContainer extends Component {
   }
 
   async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.catagory}&apiKey=${this.props.apiKey}&pageSize=${this.props.pgsize}&page=${this.state.page}`;
+    let url = `https://newsapi.org/v2/${this.props.topic}?${this.props.q}${this.props.country}${this.props.catagory}&sortBy=publishedAt&apiKey=${this.props.apiKey}&pageSize=${this.props.pgsize}&page=${this.state.page}`;
     let data = await fetch(url);
     let datalog = await data.json();
     this.setState({
@@ -44,7 +49,7 @@ export class NewsContainer extends Component {
 
   //to add infinite scroll
   update = async () => {
-      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.catagory}&apiKey=${this.props.apiKey}&pageSize=${this.props.pgsize}&page=${this.state.page + 1}`;
+      let url = `https://newsapi.org/v2/${this.props.topic}?${this.props.q}${this.props.country}${this.props.catagory}&sortBy=publishedAt&apiKey=${this.props.apiKey}&pageSize=${this.props.pgsize}&page=${this.state.page + 1}`;
       let data = await fetch(url);
       let datalog = await data.json();
       this.setState({
