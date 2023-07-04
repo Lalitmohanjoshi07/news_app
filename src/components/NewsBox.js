@@ -38,12 +38,12 @@ export class NewsBox extends Component {
     let {title,desc,imageLink,url,date,source}=this.props;
     return (
       <div className="card my-2 ">
-        
-          <span className="position-absolute top-1  badge rounded-pill bg-danger">
+        <div style={{direction: 'rtl'}}>
+          <span className="position-absolute top-1 badge rounded-pill bg-danger" style={{fontSize:'80%'}}>
           {source}
           </span>
-        
-        <img src={imageLink ? imageLink : "https://www.moroylab.org/wp-content/uploads/2018/05/news-2444778_640.jpg"} className="card-img-top" alt="news"/>
+          <img src={imageLink ? imageLink : "https://www.moroylab.org/wp-content/uploads/2018/05/news-2444778_640.jpg"} className="card-img-top" alt="news"/>
+        </div>
         <div className="card-body">
           <h5 className="card-title">{title}</h5>
           {date && <sub>{this.getTime(new Date()-new Date(date))} ago</sub>}

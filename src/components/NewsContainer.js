@@ -62,7 +62,7 @@ export class NewsContainer extends Component {
   render() {
     return (
       <div className="container my-2">
-        <h1 className="my-3"><center>Samachar News : Daily top headlines</center></h1>
+        <h1 className="my-3"><center>Samachar News : Daily {this.props.heading}</center></h1>
 
         {/* if the webpage is empty */}
         {this.state.loading && <center>loding.....</center>}
