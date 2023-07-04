@@ -77,7 +77,7 @@ export class NewsContainer extends Component {
           loader={<p>Loading...</p>}
           endMessage={<center>you have reached the end of news.</center>}
         >
-          <div className="row container">
+          <div className="row ">
             {this.state.articles && this.state.articles.map((element) => {
               return (
                 <div key={element.url} className="col-md-4">
@@ -86,6 +86,8 @@ export class NewsContainer extends Component {
                     imageLink={element.urlToImage}
                     url={element.url}
                     desc={element.description}
+                    date={element.publishedAt}
+                    source={element.source.name}
                   />
                 </div>
               );
