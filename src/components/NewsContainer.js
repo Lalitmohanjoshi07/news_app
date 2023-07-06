@@ -20,10 +20,8 @@ export class NewsContainer extends Component {
     q: PropTypes.string,
   }
   
-
   constructor() {
     super();
-    // console.log(this.props.q);
     this.state = {
       articles: [],
       loading: true,
@@ -32,8 +30,10 @@ export class NewsContainer extends Component {
     };
     // this.next = this.next.bind(this);
   }
-
+  title=this.props
+  
   async componentDidMount() {
+    this.setTitle(this.props.heading);
     let url = `https://newsapi.org/v2/${this.props.topic}?${this.props.q}${this.props.country}${this.props.catagory}&sortBy=publishedAt&apiKey=${this.props.apiKey}&pageSize=${this.props.pgsize}&page=${this.state.page}`;
     let data = await fetch(url);
     let datalog = await data.json();
@@ -44,25 +44,29 @@ export class NewsContainer extends Component {
     });
     // console.log("cdm", datalog);
   }
-
-
-
+  
+  setTitle=(x)=>{
+    document.title= `SamacharNews-${x}`
+  }
+  
+  
+  
   //to add infinite scroll
   update = async () => {
-      let url = `https://newsapi.org/v2/${this.props.topic}?${this.props.q}${this.props.country}${this.props.catagory}&sortBy=publishedAt&apiKey=${this.props.apiKey}&pageSize=${this.props.pgsize}&page=${this.state.page + 1}`;
-      let data = await fetch(url);
-      let datalog = await data.json();
-      this.setState({
-        articles: this.state.articles.concat(datalog.articles),
-        page: this.state.page + 1,
-      });
-      // console.log("cdm", datalog);
+    let url = `https://newsapi.org/v2/${this.props.topic}?${this.props.q}${this.props.country}${this.props.catagory}&sortBy=publishedAt&apiKey=${this.props.apiKey}&pageSize=${this.props.pgsize}&page=${this.state.page + 1}`;
+    let data = await fetch(url);
+    let datalog = await data.json();
+    this.setState({
+      articles: this.state.articles.concat(datalog.articles),
+      page: this.state.page + 1,
+    });
+    // console.log("cdm", datalog);
   };
-
+  
   render() {
     return (
       <div className="container my-2">
-        <h1 className="my-3"><center>Samachar News : Daily {this.props.heading}</center></h1>
+        <h1 className="my-3"><center style={{marginTop:"90px"}}>Samachar News : {this.props.heading}</center></h1>
 
         {/* if the webpage is empty */}
         {this.state.loading && <center>loding.....</center>}
@@ -70,6 +74,7 @@ export class NewsContainer extends Component {
         {/* if the article have any news then only render this data*/}
         {(this.state.articles.length>0 || !this.state.loading)&& 
         /*added infinite scroll*/<InfiniteScroll
+          style={{display:"contents"}}
           dataLength={this.state.articles.length}
           next={this.update}
           //condition for loading

@@ -13,12 +13,13 @@ export default class navbar extends Component {
     this.props.search(this.state.text);
     if(this.state.text!==''){
       this.ch='custom'
+      this.resetClass()
     }else{
       this.ch=''
     }
   }
 
-  activeStatus=(parm)=>{
+  resetClass(){
     document.getElementById('one').className='nav-link';
     document.getElementById('two').className='nav-link';
     document.getElementById('three').className='nav-link';
@@ -27,13 +28,17 @@ export default class navbar extends Component {
     document.getElementById('six').className='nav-link';
     document.getElementById('seven').className='nav-link';
     document.getElementById('eight').className='nav-link';
+  }
+
+  activeStatus=(parm)=>{
+    this.resetClass();
     document.getElementById(parm).className='nav-link active';
   }
 
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
           <div className="container-fluid">
             <span className="navbar-brand h1 mb-0">SamacharNews</span>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +46,7 @@ export default class navbar extends Component {
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div className="navbar-nav">
-                <Link className="nav-link " id='one' onClick={()=>{this.activeStatus('one')}} aria-current="page" to="/">Home</Link>
+                <Link className="nav-link active" id='one' onClick={()=>{this.activeStatus('one')}} aria-current="page" to="/">Home</Link>
                 <Link className="nav-link " id='two' onClick={()=>{this.activeStatus('two')}} aria-current="page" to="/business">Business</Link>
                 <Link className="nav-link " id='three' onClick={()=>{this.activeStatus('three')}} aria-current="page" to="/entertainment">Entertainment</Link>
                 <Link className="nav-link " id='four' onClick={()=>{this.activeStatus('four')}} aria-current="page" to="/general">General</Link>
