@@ -41,10 +41,11 @@ export default class navbar extends Component {
                 <ActiveStatus />
               </div>
             </div>
-            <div className="d-flex">
+            <div className="d-flex my-1">  
               <input
                 className="form-control me-2"
                 type="text"
+                id="kk"
                 value={this.state.text}
                 onChange={this.entry}
                 placeholder="Search"

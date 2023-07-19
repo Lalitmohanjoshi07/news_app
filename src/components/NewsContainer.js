@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import NewsBox from "./NewsBox";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PropTypes from 'prop-types'
-
+const burl="http://localhost:5000/api/getNews";
 
 export class NewsContainer extends Component {
   static defaultProps = {
@@ -35,8 +35,16 @@ export class NewsContainer extends Component {
   async componentDidMount() {
     this.setTitle(this.props.heading);
     let url = `https://newsapi.org/v2/${this.props.topic}?${this.props.q}${this.props.country}${this.props.catagory}&sortBy=publishedAt&apiKey=${this.props.apiKey}&pageSize=${this.props.pgsize}&page=${this.state.page}`;
-    let data = await fetch(url);
-    let datalog = await data.json();
+    const response = await fetch(burl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({url:url})
+    });
+    
+    // let data = await fetch(url);
+    let datalog = await response.json();//data.json();
     this.setState({
       articles: datalog.articles,
       totalres: datalog.totalResults,
@@ -54,8 +62,16 @@ export class NewsContainer extends Component {
   //to add infinite scroll
   update = async () => {
     let url = `https://newsapi.org/v2/${this.props.topic}?${this.props.q}${this.props.country}${this.props.catagory}&sortBy=publishedAt&apiKey=${this.props.apiKey}&pageSize=${this.props.pgsize}&page=${this.state.page + 1}`;
-    let data = await fetch(url);
-    let datalog = await data.json();
+    
+    const response = await fetch(burl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({url:url})
+    });
+
+    let datalog = await response.json();
     this.setState({
       articles: this.state.articles.concat(datalog.articles),
       page: this.state.page + 1,
@@ -66,7 +82,7 @@ export class NewsContainer extends Component {
   render() {
     return (
       <div className="container my-2">
-        <h1 className="my-3"><center style={{marginTop:"90px"}}>Samachar News : {this.props.heading}</center></h1>
+        <h1 className="my-3"><center style={{marginTop:"100px"}}>Samachar News : {this.props.heading}</center></h1>
 
         {/* if the webpage is empty */}
         {this.state.loading && <center>loding.....</center>}
